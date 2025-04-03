@@ -13,7 +13,6 @@ repositories {
 
 dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
-    testImplementation("com.github.appium:java-client:8.1.1")
     testImplementation("org.seleniumhq.selenium:selenium-java:4.2.1")
 }
 
