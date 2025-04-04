@@ -6,7 +6,7 @@ import ui.SignInPageObject
 
 private const val BASE_URL = "https://eios.kemsu.ru/a/eios"
 
-class SignInTestCase : CoreTestCase() {
+class EiosTestCase : CoreTestCase() {
     @Test
     fun testSignIn() {
         driver.apply {

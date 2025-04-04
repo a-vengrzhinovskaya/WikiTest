@@ -1,8 +1,10 @@
 package ui
 
+import org.openqa.selenium.StaleElementReferenceException
 import org.openqa.selenium.chrome.ChromeDriver
 
 private const val DEFAULT_WAITING_TIME: Long = 5
+private const val DEFAULT_ATTEMPT_COUNT = 2
 private const val HEADER_SEARCH_BUTTON_PATH =
     "//*[@class='tm-header-user-menu__item tm-header-user-menu__search']"
 private const val SEARCH_FIELD_PATH = "//*[@class='tm-search__input tm-input-text-decorated__input']"
@@ -14,7 +16,18 @@ private const val DATE_EXPECTED = "28 сен 2012 в 17:14"
 private const val ARTICLES_FOOTER_PATH = "//a[@href='/ru/articles/' and @class='footer-menu__item-link']"
 
 class HabrPageObject(driver: ChromeDriver) : MainPageObject(driver) {
-    fun clickSearchInHeader() = waitForElementAndClickByPath(HEADER_SEARCH_BUTTON_PATH, DEFAULT_WAITING_TIME)
+    fun clickSearchInHeader() {
+        var attemptCount = 0
+        while (attemptCount < DEFAULT_ATTEMPT_COUNT) {
+            try {
+                waitForElementAndClickByPath(HEADER_SEARCH_BUTTON_PATH, DEFAULT_WAITING_TIME)
+                break
+            } catch (e: StaleElementReferenceException) {
+                attemptCount++
+            }
+        }
+    }
+
     fun checkIfSearchFieldIsFocused() = checkIfElementIsFocusedByPath(SEARCH_FIELD_PATH, DEFAULT_WAITING_TIME)
     fun typeSearchQuery() = waitForElementAndSendKeysByPath(SEARCH_FIELD_PATH, SEARCH_QUERY, DEFAULT_WAITING_TIME)
     fun clickSearchInSearchField() = waitForElementAndClickByPath(SEARCH_FIELD_SEARCH_BUTTON_PATH, DEFAULT_WAITING_TIME)

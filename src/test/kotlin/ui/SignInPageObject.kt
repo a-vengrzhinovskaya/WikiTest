@@ -21,7 +21,17 @@ class SignInPageObject(driver: ChromeDriver) : MainPageObject(driver) {
     fun typeLogin() = waitForElementAndSendKeysByPath(LOGIN_PATH, LOGIN, DEFAULT_WAITING_TIME)
     fun typePassword() = waitForElementAndSendKeysByPath(PASSWORD_PATH, PASSWORD, DEFAULT_WAITING_TIME)
     fun clickSingInButton() = waitForElementAndClickByPath(SING_IN_BUTTON_PATH, DEFAULT_WAITING_TIME)
-    fun checkName() = checkIfElementTextEqualsExpectedByPath(NAME_PATH, EXPECTED_NAME, DEFAULT_WAITING_TIME)
+    fun checkName() {
+        var attemptCount = 0
+        while (attemptCount < DEFAULT_ATTEMPT_COUNT) {
+            try {
+                checkIfElementTextEqualsExpectedByPath(NAME_PATH, EXPECTED_NAME, DEFAULT_WAITING_TIME)
+                break
+            } catch (e: StaleElementReferenceException) {
+                attemptCount++
+            }
+        }
+    }
 
     fun logOut() {
         var attemptCount = 0
