@@ -19,7 +19,7 @@ abstract class CoreTestCase {
             "webdriver.chrome.driver",
             "D:\\IntellijProjects\\WikiTest\\src\\main\\driver\\chromedriver.exe"
         )
-        val chromeOptions = ChromeOptions().apply { addArguments("--remote-allow-origins=*") }
+        val chromeOptions = ChromeOptions().apply { addArguments("--remote-allow-origins=*") } //нужно для Selenium <4.8.2 версии
         return ChromeDriver(chromeOptions)
     }
 

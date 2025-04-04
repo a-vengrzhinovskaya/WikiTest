@@ -15,7 +15,7 @@ abstract class MainPageObject(private val driver: ChromeDriver) {
         try {
             with(driver) {
                 manage().timeouts().implicitlyWait(Duration.ofSeconds(waitingTime))
-                return driver.findElement(By.xpath(path))
+                return findElement(By.xpath(path))
             }
         } catch (e: Exception) {
             throw e
@@ -28,7 +28,7 @@ abstract class MainPageObject(private val driver: ChromeDriver) {
         try {
             with(driver) {
                 manage().timeouts().implicitlyWait(Duration.ofSeconds(waitingTime))
-                return driver.findElement(By.linkText(text))
+                return findElement(By.linkText(text))
             }
         } catch (e: Exception) {
             throw e
@@ -74,14 +74,25 @@ abstract class MainPageObject(private val driver: ChromeDriver) {
         path: String, expectedText: String, waitingTime: Long = DEFAULT_WAITING_TIME
     ) = try {
         Assertions.assertEquals(
-            waitForElementAndFindByPath(path, waitingTime).text,
-            expectedText
+            expectedText,
+            waitForElementAndFindByPath(path, waitingTime).text
         )
     } catch (e: Exception) {
         throw e
     }
 
+    protected fun clearInputByPath(path: String, waitingTime: Long = DEFAULT_WAITING_TIME) {
+        waitForElementAndFindByPath(path, waitingTime).clear()
+    }
+
     protected fun scrollDown() {
         driver.executeScript("window.scrollTo(0, document.body.scrollHeight)")
+    }
+
+    protected fun checkIfUrlChanged(url: String, waitingTime: Long = DEFAULT_WAITING_TIME) {
+        with(driver) {
+            manage().timeouts().implicitlyWait(Duration.ofSeconds(waitingTime))
+            Assertions.assertEquals(url, currentUrl)
+        }
     }
 }

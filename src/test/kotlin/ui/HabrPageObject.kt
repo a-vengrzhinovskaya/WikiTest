@@ -12,7 +12,6 @@ private const val SEARCH_RESULT_TEXT = "Что такое Selenium?"
 private const val DATE_PATH = "//*[@title='2012-09-28, 17:14']"
 private const val DATE_EXPECTED = "28 сен 2012 в 17:14"
 private const val ARTICLES_FOOTER_PATH = "//a[@href='/ru/articles/' and @class='footer-menu__item-link']"
-private const val WAITING_TIME: Long = 30
 
 class HabrPageObject(driver: ChromeDriver) : MainPageObject(driver) {
     fun clickSearchInHeader() = waitForElementAndClickByPath(HEADER_SEARCH_BUTTON_PATH, DEFAULT_WAITING_TIME)
